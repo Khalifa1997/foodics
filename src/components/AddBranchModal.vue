@@ -13,7 +13,7 @@
               Add Branches
             </h3>
             <div class="mt-2">
-              <AppDropdown
+              <AddBranchDropdown
                 style="min-width: 400px"
                 :items="branches"
                 @branches="branchesChange"
@@ -40,7 +40,7 @@
 <script>
 import { defineComponent } from "vue";
 import AppButton from "./AppButton.vue";
-import AppDropdown from "./AppDropdown.vue";
+import AddBranchDropdown from "./AddBranchDropdown.vue";
 import axios from "../../axios";
 export default defineComponent({
   props: {
@@ -52,7 +52,7 @@ export default defineComponent({
     };
   },
   components: {
-    AppDropdown,
+    AddBranchDropdown,
     AppButton,
   },
   methods: {
