@@ -1,6 +1,5 @@
 <template>
   <div class="text-center m-auto mt-20">
-    <AppButton text="button" @click="showModal = !showModal" />
     <AddBranchModal v-show="showModal" :branches="branches" @add="addBranch" />
     <div
       class="flex flex-col gap-4 m-20 rounded-sm bg-red-100 justify-center items-center"
@@ -15,14 +14,12 @@
 </template>
 
 <script>
-import AppButton from "./components/AppButton.vue";
 import axios from "../axios";
 import AddBranchModal from "./components/AddBranchModal.vue";
 import AppTable from "./components/AppTable.vue";
 export default {
   name: "App",
   components: {
-    AppButton,
     AddBranchModal,
     AppTable,
   },

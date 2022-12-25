@@ -1,5 +1,5 @@
 <template>
-  <div class="relative inline-block text-left" v-if="items.length">
+  <div class="relative inline-block text-left">
     <div>
       <button
         type="button"
@@ -64,7 +64,7 @@ export default {
     },
     selectBranch(branch) {
       this.selected.push(branch);
-      this.toggleShow();
+      this.show = false;
       this.$emit("branches", this.selected);
     },
   },
