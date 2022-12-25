@@ -9,7 +9,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="branch in branches" :key="branch.id">
+      <tr
+        v-for="branch in branches"
+        :key="branch.id"
+        @click="addReservation(branch)"
+      >
         <td>{{ branch.name }}</td>
         <td>{{ branch.reference }}</td>
         <td>{{ numberofTables(branch) }}</td>
@@ -27,6 +31,9 @@ export default defineComponent({
     branches: Array,
   },
   methods: {
+    addReservation(branch) {
+      this.$emit("add", branch);
+    },
     numberofTables(branch) {
       let count = 0;
       for (let index = 0; index < branch.sections.length; index++) {
