@@ -10,9 +10,7 @@
 
 <script>
 import { defineComponent } from "vue";
-export default defineComponent({
-  components: {},
-});
+export default defineComponent({});
 </script>
 
 <style scoped></style>
