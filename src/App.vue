@@ -1,6 +1,11 @@
 <template>
   <div class="text-center m-auto mt-20">
-    <AddBranchModal v-show="showModal" :branches="branches" @add="addBranch" />
+    <AppButton text="Disable Reservation" @click.native="disableReservations" />
+    <AddBranchModal
+      v-show="showModal"
+      :branches="notReservationAcceptingBranches"
+      @add="addBranch"
+    />
     <div
       class="flex flex-col gap-4 m-20 rounded-sm bg-red-100 justify-center items-center"
     >
@@ -16,12 +21,14 @@
 <script>
 import axios from "../axios";
 import AddBranchModal from "./components/AddBranchModal.vue";
+import AppButton from "./components/AppButton.vue";
 import AppTable from "./components/AppTable.vue";
 export default {
   name: "App",
   components: {
     AddBranchModal,
     AppTable,
+    AppButton,
   },
   data: function () {
     return {
@@ -33,14 +40,27 @@ export default {
     reservationAcceptingBranches: function () {
       return this.branches.filter((branch) => branch.accepts_reservations);
     },
+    notReservationAcceptingBranches: function () {
+      return this.branches.filter((branch) => !branch.accepts_reservations);
+    },
   },
   methods: {
     addReservation(branch) {
       console.log(branch);
     },
-    addBranch(branchID) {
-      const found = this.branches.find((e) => e.id === branchID);
+    addBranch(branch) {
+      const found = this.branches.find((e) => e.id === branch.id);
       if (found) found.accepts_reservations = true;
+    },
+    disableReservations() {
+      this.branches.forEach((branch) => {
+        axios
+          .put(`/branches/${branch.id}`, { accepts_reservations: false })
+          .then(() => {
+            const foundBranch = this.branches.find((el) => el.id == branch.id);
+            if (foundBranch) foundBranch.accepts_reservations = false;
+          });
+      });
     },
   },
   created() {

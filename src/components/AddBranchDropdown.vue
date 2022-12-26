@@ -8,7 +8,7 @@
         @click="toggleShow"
       >
         <span
-          v-for="branch in selected"
+          v-for="branch in items"
           :key="branch.id"
           class="border-2 border-blue-400 rounded-md px-2 py-1 mr-2 text-xs"
           >{{ formatBranch(branch) }}</span
@@ -48,11 +48,15 @@
 export default {
   props: {
     items: Array,
+    options: Array,
+  },
+  model: {
+    prop: "items",
+    event: "branches",
   },
   data: function () {
     return {
       show: false,
-      selected: [],
     };
   },
   methods: {
@@ -63,15 +67,14 @@ export default {
       return branch.name + ` (${branch.reference})`;
     },
     selectBranch(branch) {
-      this.selected.push(branch);
       this.show = false;
-      this.$emit("branches", this.selected);
+      this.$emit("branches", [...this.items, branch]);
     },
   },
   computed: {
     availableBranches: function () {
-      const selected = this.selected.map((el) => el.id);
-      return this.items.filter((el) => !selected.includes(el.id));
+      const selected = this.items.map((el) => el.id);
+      return this.options.filter((el) => !selected.includes(el.id));
     },
   },
 };
