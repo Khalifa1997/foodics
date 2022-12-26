@@ -6,6 +6,7 @@
       :branches="notReservationAcceptingBranches"
       @add="addBranch"
     />
+    <EditBranchModal v-model="editModalShow" :branch="selectedBranch" />
     <div
       class="flex flex-col gap-4 m-20 rounded-sm bg-red-100 justify-center items-center"
     >
@@ -23,17 +24,21 @@ import axios from "../axios";
 import AddBranchModal from "./components/AddBranchModal.vue";
 import AppButton from "./components/AppButton.vue";
 import AppTable from "./components/AppTable.vue";
+import EditBranchModal from "./components/EditBranchModal.vue";
 export default {
   name: "App",
   components: {
     AddBranchModal,
     AppTable,
     AppButton,
+    EditBranchModal,
   },
   data: function () {
     return {
       showModal: true,
       branches: [],
+      selectedBranch: {},
+      editModalShow: false,
     };
   },
   computed: {
@@ -46,7 +51,8 @@ export default {
   },
   methods: {
     addReservation(branch) {
-      console.log(branch);
+      this.editModalShow = true;
+      this.selectedBranch = branch;
     },
     addBranch(branch) {
       const found = this.branches.find((e) => e.id === branch.id);
