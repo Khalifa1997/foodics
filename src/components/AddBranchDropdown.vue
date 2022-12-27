@@ -4,7 +4,7 @@
       <span
         v-for="branch in items"
         :key="branch.id"
-        class="border-2 border-blue-400 rounded-md px-2 py-1 mr-2 text-xs"
+        class="border-2 border-blue-400 rounded-md px-2 py-1 mr-1 mb-1 text-xs"
         >{{ formatBranch(branch) }}</span
       >
     </template>
