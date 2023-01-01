@@ -1,6 +1,6 @@
 <template>
-  <AppModal>
-    <template>
+  <AppModal v-model="model">
+    <template #body>
       <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
         <div class="sm:flex sm:items-start">
           <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
@@ -20,18 +20,16 @@
           </div>
         </div>
       </div>
-      <div
-        class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse gap-3 mt-auto"
+    </template>
+    <template #footer>
+      <AppButton text="Save" @click.native="handleSaveClick" />
+      <button
+        @click="toggleShow"
+        type="button"
+        class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
       >
-        <AppButton text="Save" @click.native="handleSaveClick" />
-        <button
-          @click="handleCancelClick"
-          type="button"
-          class="mt-3 inline-flex w-full justify-center rounded-md border border-gray-300 bg-white px-4 py-2 text-base font-medium text-gray-700 shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-        >
-          Cancel
-        </button>
-      </div>
+        Cancel
+      </button>
     </template>
   </AppModal>
 </template>
@@ -51,6 +49,11 @@ export default defineComponent({
   },
   props: {
     branches: Array,
+    modelValue: Boolean,
+  },
+  model: {
+    prop: "modelValue",
+    event: "update:modelValue",
   },
   data: function () {
     return {
@@ -64,6 +67,9 @@ export default defineComponent({
     handleCancelClick() {
       this.selectedBranches = [];
     },
+    toggleShow() {
+      this.$emit("update:modelValue", false);
+    },
     handleSaveClick() {
       this.selectedBranches.forEach((branch) => {
         axios
@@ -71,6 +77,16 @@ export default defineComponent({
           .then(() => this.$emit("add", branch));
       });
       this.selectedBranches = [];
+    },
+  },
+  computed: {
+    model: {
+      get() {
+        return this.modelValue;
+      },
+      set(newModelValue) {
+        this.$emit("update:modelValue", newModelValue);
+      },
     },
   },
 });

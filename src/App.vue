@@ -2,7 +2,7 @@
   <div class="text-center m-auto mt-20">
     <AppButton text="Disable Reservation" @click.native="disableReservations" />
     <AddBranchModal
-      v-show="showModal"
+      v-model="showModal"
       :branches="notReservationAcceptingBranches"
       @add="addBranch"
     />
@@ -10,7 +10,12 @@
     <div
       class="flex flex-col gap-4 m-20 rounded-sm bg-red-100 justify-center items-center"
     >
-      <button class="border-gray-400 ml-auto border-2 px-4 py-2">Hi</button>
+      <button
+        class="border-gray-400 ml-auto border-2 px-4 py-2 bg-white rounded-lg m-4"
+        @click="showModal = true"
+      >
+        Add Reservations
+      </button>
       <AppTable
         :branches="reservationAcceptingBranches"
         @add="addReservation"
@@ -25,6 +30,7 @@ import AddBranchModal from "./components/AddBranchModal.vue";
 import AppButton from "./components/AppButton.vue";
 import AppTable from "./components/AppTable.vue";
 import EditBranchModal from "./components/EditBranchModal.vue";
+
 export default {
   name: "App",
   components: {
@@ -35,7 +41,7 @@ export default {
   },
   data: function () {
     return {
-      showModal: true,
+      showModal: false,
       branches: [],
       selectedBranch: {},
       editModalShow: false,
