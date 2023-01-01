@@ -1,14 +1,14 @@
 <template>
   <table class="text-start">
     <thead>
-      <tr class="border-gray-600 border-y-2">
-        <th class="pr-10 text-start">Branch</th>
-        <th class="pr-10 text-start">Reference</th>
-        <th class="pr-10 text-start">Number of Tables</th>
-        <th class="pr-10 text-start">Reservation Duration</th>
+      <tr class="border-gray-600 border-2">
+        <th class="pr-20 text-start">Branch</th>
+        <th class="pr-20 text-start">Reference</th>
+        <th class="pr-20 text-start">Number of Tables</th>
+        <th class="pr-20 text-start">Reservation Duration</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="border-gray-600 border-2">
       <tr
         v-for="branch in branches"
         :key="branch.id"

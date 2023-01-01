@@ -17,11 +17,23 @@
             <h6>
               Reservation Duration (minutes)<span class="text-red-600">*</span>
             </h6>
-            <AppInput v-model="reservationDuration" />
+            <AppInput
+              :class="{
+                'border-2 border-red-600': reservationDurationError,
+              }"
+              type="number"
+              v-model="reservationDuration"
+            />
           </div>
           <div>
             <h6>Tables</h6>
-            <AddTableDropdown :options="sections" v-model="tables" />
+            <AddTableDropdown
+              :class="{
+                'border-2 border-red-600 rounded-lg': tablesError,
+              }"
+              :options="sections"
+              v-model="tables"
+            />
           </div>
           <div v-for="(day, index) in days" :key="day.weekDay">
             <div class="flex justify-between my-1">
@@ -31,7 +43,7 @@
               <span
                 @click="applyToAllDays"
                 v-if="index == 0"
-                class="text-purple-500"
+                class="text-purple-500 cursor-pointer"
                 >Apply on All Days</span
               >
             </div>
@@ -52,6 +64,9 @@
               />
             </div>
           </div>
+          <small v-show="daysError" class="self-start text-red-600"
+            >Please enter any day</small
+          >
         </div>
       </div>
     </template>
@@ -61,7 +76,7 @@
         text="Close"
         @click.native="toggleShow"
       />
-      <AppButton text="Save" />
+      <AppButton @click.native="handleSaveClick" text="Save" />
     </template>
   </AppModal>
 </template>
@@ -72,13 +87,16 @@ import AppButton from "./AppButton.vue";
 import AppInput from "./AppInput.vue";
 import AppModal from "./AppModal.vue";
 import TimeSlot from "./TimeSlot.vue";
+import axios from "../../axios";
 
 AddTableDropdown;
 export default {
   data: function () {
     return {
       reservationDuration: "",
+      reservationDurationError: false,
       tables: [],
+      tablesError: false,
       days: [
         {
           weekDay: "Saturday",
@@ -109,6 +127,7 @@ export default {
           time: [],
         },
       ],
+      daysError: false,
     };
   },
   components: {
@@ -169,6 +188,42 @@ export default {
         const arrayCopy = JSON.parse(JSON.stringify(this.days[0].time));
         this.days[index].time = [...arrayCopy];
       }
+    },
+    handleSaveClick() {
+      this.reservationDurationError = !this.reservationDuration.length;
+
+      this.tablesError = !this.tables.length;
+
+      let isThereReservations = false;
+
+      const reservation_times = {};
+      this.days.forEach((day) => {
+        const timeSlots = [];
+        day.time.forEach((e) => {
+          if (e.from && e.to) {
+            timeSlots.push([e.from, e.to]);
+            isThereReservations = true;
+          }
+        });
+        reservation_times[day.weekDay.toLowerCase()] = timeSlots;
+      });
+
+      if (!isThereReservations) this.daysError = true;
+
+      if (
+        !isThereReservations ||
+        this.tablesError ||
+        this.reservationDurationError
+      )
+        return;
+
+      axios
+        .put(`/branches/${this.branch.id}`, {
+          reservation_duration: +this.reservationDuration,
+          reservation_times: reservation_times,
+          tables: this.tables,
+        })
+        .finally(() => this.toggleShow());
     },
   },
   created() {

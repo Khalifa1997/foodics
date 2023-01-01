@@ -74,7 +74,8 @@ export default defineComponent({
       this.selectedBranches.forEach((branch) => {
         axios
           .put(`/branches/${branch.id}`, { accepts_reservations: true })
-          .then(() => this.$emit("add", branch));
+          .then(() => this.$emit("add", branch))
+          .finally(() => this.toggleShow());
       });
       this.selectedBranches = [];
     },

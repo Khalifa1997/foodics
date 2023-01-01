@@ -12,7 +12,7 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   props: {
-    value: String,
+    value: String || Number,
   },
   methods: {
     updateValue(event) {

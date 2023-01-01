@@ -1,14 +1,14 @@
 <template>
-  <div class="text-center m-auto mt-20">
-    <AppButton text="Disable Reservation" @click.native="disableReservations" />
-    <AddBranchModal
-      v-model="showModal"
-      :branches="notReservationAcceptingBranches"
-      @add="addBranch"
-    />
-    <EditBranchModal v-model="editModalShow" :branch="selectedBranch" />
+  <div class="text-center m-auto bg-slate-500 h-screen">
+    <div class="flex justify-between px-20 bg-white items-center h-32">
+      <h1 class="text-2xl my-auto">Reservations</h1>
+      <AppButton
+        text="Disable Reservation"
+        @click.native="disableReservations"
+      />
+    </div>
     <div
-      class="flex flex-col gap-4 m-20 rounded-sm bg-red-100 justify-center items-center"
+      class="flex flex-col gap-4 m-20 rounded-sm border-2 bg-white border-gray-200 justify-center items-center py-10 shadow-2xl rounded-xl"
     >
       <button
         class="border-gray-400 ml-auto border-2 px-4 py-2 bg-white rounded-lg m-4"
@@ -21,6 +21,12 @@
         @add="addReservation"
       />
     </div>
+    <AddBranchModal
+      v-model="showModal"
+      :branches="notReservationAcceptingBranches"
+      @add="addBranch"
+    />
+    <EditBranchModal v-model="editModalShow" :branch="selectedBranch" />
   </div>
 </template>
 

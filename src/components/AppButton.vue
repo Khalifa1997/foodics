@@ -1,5 +1,5 @@
 <template>
-  <button class="bg-purple-800 rounded-lg px-4 py-2 text-white">
+  <button v-bind="$attrs" class="bg-purple-800 rounded-lg px-4 py-2 text-white">
     {{ text }}
   </button>
 </template>

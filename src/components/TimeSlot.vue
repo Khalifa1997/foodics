@@ -4,7 +4,7 @@
   >
     <InputMask
       v-model="from"
-      mask="99-99"
+      mask="99:99"
       slotChar="hh:mm"
       :class="{
         'outline-none w-12 text-xs text-center': true,
@@ -17,7 +17,7 @@
     <span>-</span>
     <InputMask
       v-model="to"
-      mask="99-99"
+      mask="99:99"
       slotChar="hh:mm"
       :class="{
         'outline-none w-12 text-xs text-center': true,
@@ -68,8 +68,8 @@ export default {
     isRightFormat(string) {
       return (
         !this.containsLetter(string) &&
-        this.hourInsideLimit(string.split("-")[0]) &&
-        this.minuteInsideLimit(string.split("-")[1])
+        this.hourInsideLimit(string.split(":")[0]) &&
+        this.minuteInsideLimit(string.split(":")[1])
       );
     },
     removeTimeSlot() {
@@ -79,9 +79,9 @@ export default {
   computed: {
     isBetween: function () {
       return (
-        this.to.split("-")[0] > this.from.split("-")[0] ||
-        (this.to.split("-")[0] === this.from.split("-")[0] &&
-          this.to.split("-")[1] > this.from.split("-")[1])
+        this.to.split(":")[0] > this.from.split(":")[0] ||
+        (this.to.split(":")[0] === this.from.split(":")[0] &&
+          this.to.split(":")[1] > this.from.split(":")[1])
       );
     },
   },
