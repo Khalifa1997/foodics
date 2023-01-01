@@ -14,7 +14,7 @@ yarn serve
 
 This Project was build with <p> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/vuejs/vuejs-original-wordmark.svg" alt="vuejs" width="40" height="40"/> </a> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/></p>
 
-_I tried uploading to Vercel but it didn't work, I assume because of the dev server thing_
+_I tried deploying to Vercel but it didn't work, I assume because of the dev server thing_
 
 ## Screenshots
 
