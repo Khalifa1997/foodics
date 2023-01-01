@@ -8,13 +8,13 @@
       />
     </div>
     <div
-      class="flex flex-col gap-4 m-20 rounded-sm border-2 bg-white border-gray-200 justify-center items-center py-10 shadow-2xl rounded-xl"
+      class="flex flex-col gap-4 m-20 border-2 bg-white border-gray-200 justify-center items-center py-10 shadow-2xl rounded-xl"
     >
       <button
         class="border-gray-400 ml-auto border-2 px-4 py-2 bg-white rounded-lg m-4"
         @click="showModal = true"
       >
-        Add Reservations
+        Add Branches
       </button>
       <AppTable
         :branches="reservationAcceptingBranches"
