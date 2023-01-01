@@ -17,7 +17,7 @@
         <td>{{ branch.name }}</td>
         <td>{{ branch.reference }}</td>
         <td>{{ numberofTables(branch) }}</td>
-        <td>{{ branch.reservation_duration }}</td>
+        <td>{{ branch.reservation_duration }} Minutes</td>
       </tr>
     </tbody>
   </table>
